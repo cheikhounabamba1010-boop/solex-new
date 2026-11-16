@@ -1,0 +1,6 @@
+{
+  "name": "SOLEX | Équipements & Solutions Solaires au Sénégal",
+  "description": "Site officiel de SOLEX, distributeur d'équipements solaires au Sénégal : panneaux photovoltaïques, batteries, onduleurs, régulateurs MPPT et pompage solaire. Le solaire à votre portée.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
