@@ -166,13 +166,6 @@ export const Footer: React.FC<FooterProps> = () => {
           </div>
           <div className="flex items-center gap-3">
             <span>Distribution officielle de matériel solaire au Sénégal</span>
-            <span className="text-emerald-400/40">·</span>
-            <Link
-              to="/admin/login"
-              className="text-emerald-300/60 hover:text-white transition-colors"
-            >
-              Espace Admin
-            </Link>
           </div>
         </div>
       </div>
