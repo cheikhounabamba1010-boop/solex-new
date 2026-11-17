@@ -27,6 +27,8 @@ import { AdminQuotesPage } from './pages/admin/AdminQuotesPage';
 import { AdminSettingsPage } from './pages/admin/AdminSettingsPage';
 import { AdminVisualBuilderPage } from './pages/admin/AdminVisualBuilderPage';
 import { AdminMediaLibraryPage } from './pages/admin/AdminMediaLibraryPage';
+import { AdminContentPage } from './pages/admin/AdminContentPage';
+import { ContentProvider } from './context/ContentContext';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -39,6 +41,7 @@ export default function App() {
 
   return (
     <AdminAuthProvider>
+      <ContentProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
@@ -49,6 +52,7 @@ export default function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboardPage />} />
             <Route path="constructeur" element={<AdminVisualBuilderPage />} />
+            <Route path="contenu" element={<AdminContentPage />} />
             <Route path="produits" element={<AdminProductsPage />} />
             <Route path="mediatheque" element={<AdminMediaLibraryPage />} />
             <Route path="demandes" element={<AdminQuotesPage />} />
@@ -121,6 +125,7 @@ export default function App() {
           />
         </Routes>
       </BrowserRouter>
+      </ContentProvider>
     </AdminAuthProvider>
   );
 }

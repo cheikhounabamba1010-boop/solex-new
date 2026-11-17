@@ -73,6 +73,7 @@ export interface DatabaseStore {
   admin: AdminCredentials;
   settings: SiteSettings;
   layout: PageSection[];
+  content: Record<string, string>;
   products: ProductRecord[];
   quotes: QuoteRecord[];
 }
@@ -380,6 +381,7 @@ function getInitialStore(): DatabaseStore {
         "Distribution d'équipements solaires fiables et certifiés au Sénégal. Panneaux, batteries, onduleurs et pompes solaires disponibles à Dakar et expédiés dans toutes les régions.",
     },
     layout: getDefaultLayout(),
+    content: {},
     products: initialProducts,
     quotes: initialQuotes,
   };
@@ -406,6 +408,9 @@ function normalizeStore(parsed: any): DatabaseStore {
   const fixed = JSON.parse(JSON.stringify(parsed).split('/src/assets/images/').join('/assets/images/'));
   if (!fixed.layout || !Array.isArray(fixed.layout) || fixed.layout.length === 0) {
     fixed.layout = getDefaultLayout();
+  }
+  if (!fixed.content || typeof fixed.content !== 'object' || Array.isArray(fixed.content)) {
+    fixed.content = {};
   }
   return fixed;
 }
@@ -544,6 +549,26 @@ class Database {
     this.store.layout = getDefaultLayout();
     this.save();
     return this.store.layout;
+  }
+
+  // --- Page content overrides (texts & images editable from the admin) ---
+  public getContent(): Record<string, string> {
+    return { ...(this.store.content || {}) };
+  }
+
+  /** value null or '' removes the override (the site falls back to its default text). */
+  public updateContent(values: Record<string, string | null>): Record<string, string> {
+    if (!this.store.content) this.store.content = {};
+    for (const [key, value] of Object.entries(values)) {
+      if (!/^[a-zA-Z0-9._-]{1,120}$/.test(key)) continue;
+      if (value === null || value === '') {
+        delete this.store.content[key];
+      } else if (typeof value === 'string') {
+        this.store.content[key] = value.slice(0, 5000);
+      }
+    }
+    this.save();
+    return this.getContent();
   }
 
   // --- Products ---

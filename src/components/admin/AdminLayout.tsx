@@ -12,6 +12,7 @@ import {
   Shield,
   Sun,
   Layers,
+  FileText,
   FolderOpen,
 } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
@@ -47,6 +48,7 @@ export const AdminLayout: React.FC = () => {
   const navLinks = [
     { to: '/admin', label: 'Tableau de bord', icon: LayoutDashboard, end: true },
     { to: '/admin/constructeur', label: 'Constructeur Visuel (Glisser-Déposer)', icon: Layers },
+    { to: '/admin/contenu', label: 'Textes des pages', icon: FileText },
     { to: '/admin/produits', label: 'Gestion des produits', icon: Package },
     { to: '/admin/mediatheque', label: 'Médiathèque (Photos)', icon: FolderOpen },
     { to: '/admin/demandes', label: 'Demandes de devis', icon: Inbox },

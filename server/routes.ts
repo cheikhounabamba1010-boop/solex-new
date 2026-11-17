@@ -305,6 +305,23 @@ apiRouter.post('/layout/reset', requireAdmin, (_req: Request, res: Response) => 
 });
 
 // -----------------------------------------------------------------------------
+// 6b. PAGE CONTENT (texts & images of every page, editable from the admin)
+// -----------------------------------------------------------------------------
+
+apiRouter.get('/content', (_req: Request, res: Response) => {
+  res.setHeader('Cache-Control', 'no-store');
+  return res.json(db.getContent());
+});
+
+apiRouter.put('/content', requireAdmin, (req: Request, res: Response) => {
+  const values = req.body?.values;
+  if (!values || typeof values !== 'object' || Array.isArray(values)) {
+    return res.status(400).json({ error: 'Données invalides.' });
+  }
+  return res.json(db.updateContent(values));
+});
+
+// -----------------------------------------------------------------------------
 // 7. FILE UPLOAD & MEDIA LIBRARY API (Direct from Phone or PC)
 // -----------------------------------------------------------------------------
 

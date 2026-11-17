@@ -2,18 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { BRANDS } from '../data/brands';
-import { ASSETS } from '../data/assets';
+import { useContent } from '../context/ContentContext';
 import { PageHeader } from '../components/common/PageHeader';
 
 export const BrandsPage: React.FC = () => {
+  const { get } = useContent();
   return (
     <div className="bg-[#F8F8F5] min-h-screen">
       {/* En-tête concis */}
       <PageHeader
-        title="Nos marques partenaires"
-        description="Constructeurs mondiaux sélectionnés par SOLEX pour la fiabilité et la garantie de leurs équipements solaires."
-        kicker="FABRICANTS TIER-1"
-        imageSrc={ASSETS.banners.brands}
+        title={get('brands.header.title')}
+        description={get('brands.header.description')}
+        kicker={get('brands.header.kicker')}
+        imageSrc={get('brands.header.image')}
         breadcrumbs={[
           { label: 'Accueil', to: '/' },
           { label: 'Marques' },
@@ -51,13 +52,13 @@ export const BrandsPage: React.FC = () => {
 
               <div className="pt-3 border-t border-neutral-100 flex items-center justify-between">
                 <span className="text-[11px] text-neutral-400">
-                  Garantie constructeur
+                  {get('brands.card.warranty')}
                 </span>
                 <Link
                   to="/produits"
                   className="text-xs font-bold text-[#123D32] hover:underline inline-flex items-center gap-1"
                 >
-                  <span>Voir le matériel</span>
+                  <span>{get('brands.card.link')}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>

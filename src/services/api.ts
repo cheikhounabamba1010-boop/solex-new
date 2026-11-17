@@ -341,6 +341,25 @@ export const api = {
     }
   },
 
+  async getContent(): Promise<Record<string, string>> {
+    const res = await fetch('/api/content');
+    if (!res.ok) throw new Error('Contenus indisponibles.');
+    return await safeJson(res);
+  },
+
+  async updateContent(values: Record<string, string | null>): Promise<Record<string, string>> {
+    const res = await fetch('/api/content', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+      body: JSON.stringify({ values }),
+    });
+    const data = await safeJson(res);
+    if (!res.ok) {
+      throw new Error(data.error || 'Impossible de sauvegarder les contenus.');
+    }
+    return data;
+  },
+
   async updateLayout(sections: PageSectionItem[]): Promise<PageSectionItem[]> {
     const res = await fetch('/api/layout', {
       method: 'PUT',
