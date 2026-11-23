@@ -12,8 +12,8 @@ import {
   Phone,
 } from 'lucide-react';
 import { PRODUCTS } from '../data/products';
-import { CATEGORIES } from '../data/categories';
-import { ASSETS } from '../data/assets';
+import { useCategories } from '../content/useData';
+import { useContent } from '../context/ContentContext';
 import { PageHeader } from '../components/common/PageHeader';
 import { ImageWithFallback } from '../components/common/ImageWithFallback';
 import { getWhatsAppUrl } from '../utils/whatsapp';
@@ -24,6 +24,8 @@ interface ProductsPageProps {
 }
 
 export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) => {
+  const categories = useCategories();
+  const { get } = useContent();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialCategory = searchParams.get('cat') || 'all';
 
@@ -82,10 +84,10 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
     <div className="bg-[#F8F8F5] min-h-screen w-full">
       {/* 1. En-tête concis avec bannière dédiée */}
       <PageHeader
-        title="Catalogue Équipements Solaires"
-        description="Modules photovoltaïques, batteries lithium, onduleurs et pompes solaires disponibles à Dakar et expédiés dans tout le Sénégal."
-        kicker="DISTRIBUTION OFFICIELLE"
-        imageSrc={ASSETS.banners.products}
+        title={get('products.header.title')}
+        description={get('products.header.description')}
+        kicker={get('products.header.kicker')}
+        imageSrc={get('products.header.image')}
         breadcrumbs={[
           { label: 'Accueil', to: '/' },
           { label: 'Produits' },
@@ -158,7 +160,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
             >
               Tous les équipements ({productList.length})
             </button>
-            {CATEGORIES.map((cat) => {
+            {categories.map((cat) => {
               const count = productList.filter((p: any) => p.category === cat.id || p.categorySlug?.includes(cat.id)).length;
               return (
                 <button

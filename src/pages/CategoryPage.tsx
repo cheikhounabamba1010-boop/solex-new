@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { MessageCircle, ArrowRight, Sliders, Sparkles } from 'lucide-react';
-import { CATEGORIES } from '../data/categories';
+import { useCategories } from '../content/useData';
 import { PRODUCTS } from '../data/products';
 import { PageHeader } from '../components/common/PageHeader';
 import { ImageWithFallback } from '../components/common/ImageWithFallback';
@@ -14,7 +14,8 @@ interface CategoryPageProps {
 export const CategoryPage: React.FC<CategoryPageProps> = ({ onOpenQuoteModal }) => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
 
-  const category = CATEGORIES.find((c) => c.slug === categorySlug);
+  const categories = useCategories();
+  const category = categories.find((c) => c.slug === categorySlug);
 
   if (!category) {
     return <Navigate to="/produits" replace />;
@@ -47,7 +48,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ onOpenQuoteModal }) 
           >
             &larr; Tous les équipements
           </Link>
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <Link
               key={cat.id}
               to={`/produits/${cat.slug}`}

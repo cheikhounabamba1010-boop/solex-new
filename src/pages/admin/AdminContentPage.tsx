@@ -104,9 +104,9 @@ export const AdminContentPage: React.FC = () => {
           />
         )}
 
-        {field.type === 'textarea' && (
+        {(field.type === 'textarea' || field.type === 'lines') && (
           <textarea
-            rows={4}
+            rows={field.type === 'lines' ? 6 : 4}
             value={draft[field.key] ?? ''}
             onChange={(e) => setValue(field.key, e.target.value)}
             className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-900 leading-relaxed focus:outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-600"

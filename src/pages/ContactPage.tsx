@@ -8,11 +8,12 @@ import {
   getWhatsAppUrl,
 } from '../utils/whatsapp';
 import { QuoteFormData } from '../types';
-import { ASSETS } from '../data/assets';
+import { useContent } from '../context/ContentContext';
 import { PageHeader } from '../components/common/PageHeader';
 import { api } from '../services/api';
 
 export const ContactPage: React.FC = () => {
+  const { get } = useContent();
   const [formData, setFormData] = useState<QuoteFormData>({
     fullName: '',
     phone: '',
@@ -73,10 +74,10 @@ export const ContactPage: React.FC = () => {
     <div className="bg-[#F8F8F5] min-h-screen">
       {/* En-tête concis */}
       <PageHeader
-        title="Contact &amp; Devis"
-        description="Une question technique ou une demande de prix ? Notre équipe vous répond sous 24h à Dakar."
-        kicker="CONTACTEZ SOLEX"
-        imageSrc={ASSETS.banners.contact}
+        title={get('contact.header.title')}
+        description={get('contact.header.description')}
+        kicker={get('contact.header.kicker')}
+        imageSrc={get('contact.header.image')}
         breadcrumbs={[
           { label: 'Accueil', to: '/' },
           { label: 'Contact' },
@@ -90,13 +91,13 @@ export const ContactPage: React.FC = () => {
             <div className="bg-white rounded-2xl p-6 sm:p-8 border border-neutral-200 space-y-6">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-[#247A54]">
-                  Coordonnées directes
+                  {get('contact.info.label')}
                 </span>
                 <h2 className="text-xl font-bold text-neutral-900 mt-1">
-                  SOLEX Sénégal
+                  {get('contact.info.title')}
                 </h2>
                 <p className="text-xs text-neutral-500 mt-1">
-                  Distribution et commercialisation de matériel solaire.
+                  {get('contact.info.text')}
                 </p>
               </div>
 

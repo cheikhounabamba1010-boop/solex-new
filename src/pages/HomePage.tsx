@@ -10,7 +10,7 @@ import {
   Sliders,
   Sparkles,
 } from 'lucide-react';
-import { CATEGORIES } from '../data/categories';
+import { useCategories } from '../content/useData';
 import { PRODUCTS } from '../data/products';
 import { ASSETS } from '../data/assets';
 import { ImageWithFallback } from '../components/common/ImageWithFallback';
@@ -22,6 +22,7 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
+  const categories = useCategories();
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [products, setProducts] = useState(PRODUCTS);
   const [layoutSections, setLayoutSections] = useState<PageSectionItem[]>([]);
@@ -356,7 +357,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
 
               {/* Grille visuelle des 6 catégories principales */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                {CATEGORIES.slice(0, 6).map((cat) => (
+                {categories.slice(0, 6).map((cat) => (
                   <Link
                     key={cat.id}
                     to={`/produits/${cat.slug}`}

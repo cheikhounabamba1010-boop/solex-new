@@ -2,13 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { MessageCircle, Menu, X, ChevronDown, ArrowUpRight } from 'lucide-react';
 import { getWhatsAppUrl } from '../utils/whatsapp';
-import { CATEGORIES } from '../data/categories';
+import { useCategories } from '../content/useData';
+import { useContent } from '../context/ContentContext';
 
 interface HeaderProps {
   onOpenQuoteModal: (productName?: string) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
+  const categories = useCategories();
+  const { get } = useContent();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
@@ -58,7 +61,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
           aria-label="SOLEX Accueil"
         >
           <img
-            src="/assets/aistudio/LOGO_80dbff4a.png"
+            src={get('global.logo')}
             alt="SOLEX - Le solaire à votre portée"
             className="h-9 sm:h-10 w-auto object-contain"
             referrerPolicy="no-referrer"
@@ -114,7 +117,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
                     Voir tous les produits &rarr;
                   </Link>
                   <div className="my-1 border-t border-neutral-100" />
-                  {CATEGORIES.map((cat) => (
+                  {categories.map((cat) => (
                     <Link
                       key={cat.id}
                       to={`/produits/${cat.slug}`}
@@ -219,7 +222,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuoteModal }) => {
               Tous les équipements solaires
             </Link>
             <div className="pl-4 space-y-1 text-xs text-neutral-600">
-              {CATEGORIES.map((cat) => (
+              {categories.map((cat) => (
                 <Link
                   key={cat.id}
                   to={`/produits/${cat.slug}`}

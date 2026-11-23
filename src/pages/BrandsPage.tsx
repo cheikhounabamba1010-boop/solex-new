@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { BRANDS } from '../data/brands';
+import { useBrands } from '../content/useData';
 import { useContent } from '../context/ContentContext';
 import { PageHeader } from '../components/common/PageHeader';
 
 export const BrandsPage: React.FC = () => {
   const { get } = useContent();
+  const BRANDS = useBrands();
   return (
     <div className="bg-[#F8F8F5] min-h-screen">
       {/* En-tête concis */}

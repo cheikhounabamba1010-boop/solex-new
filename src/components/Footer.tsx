@@ -8,13 +8,16 @@ import {
   SOLEX_WEBSITE,
   getWhatsAppUrl,
 } from '../utils/whatsapp';
-import { CATEGORIES } from '../data/categories';
+import { useCategories } from '../content/useData';
+import { useContent } from '../context/ContentContext';
 
 interface FooterProps {
   onOpenQuoteModal?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = () => {
+  const categories = useCategories();
+  const { get } = useContent();
   return (
     <footer className="bg-[#123D32] text-white border-t border-[#1C5042] w-full">
       <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 lg:py-16">
@@ -23,7 +26,7 @@ export const Footer: React.FC<FooterProps> = () => {
           <div className="lg:col-span-4 space-y-3">
             <div className="bg-white p-2 rounded-lg inline-block">
               <img
-                src="/assets/aistudio/LOGO_80dbff4a.png"
+                src={get('global.logo')}
                 alt="SOLEX Logo officiel"
                 className="h-8 w-auto object-contain"
                 referrerPolicy="no-referrer"
@@ -31,16 +34,16 @@ export const Footer: React.FC<FooterProps> = () => {
             </div>
 
             <p className="text-[#F5A623] font-bold text-xs tracking-wider uppercase">
-              « Le solaire à votre portée. »
+              {get('footer.slogan')}
             </p>
 
             <p className="text-xs text-emerald-100/80 leading-relaxed max-w-sm">
-              Distribution de matériel solaire photovoltaïque certifié au Sénégal : panneaux, batteries lithium, onduleurs hybrides et pompes solaires.
+              {get('footer.description')}
             </p>
 
             <div className="pt-1 text-xs text-emerald-100/70 flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-[#F5A623] shrink-0" />
-              <span>Dakar, Sénégal · Expéditions nationales</span>
+              <span>{get('footer.location')}</span>
             </div>
           </div>
 
@@ -89,7 +92,7 @@ export const Footer: React.FC<FooterProps> = () => {
               Équipements
             </h4>
             <ul className="space-y-1.5 text-xs text-emerald-100/80">
-              {CATEGORIES.slice(0, 6).map((cat) => (
+              {categories.slice(0, 6).map((cat) => (
                 <li key={cat.id}>
                   <Link
                     to={`/produits/${cat.slug}`}

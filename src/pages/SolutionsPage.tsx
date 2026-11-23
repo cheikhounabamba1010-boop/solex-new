@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, Building2, Wrench, Droplets, PackageCheck, Check, MessageCircle, ArrowRight } from 'lucide-react';
-import { SOLUTIONS } from '../data/solutions';
-import { ASSETS } from '../data/assets';
+import { useSolutions } from '../content/useData';
+import { useContent } from '../context/ContentContext';
 import { PageHeader } from '../components/common/PageHeader';
 import { ImageWithFallback } from '../components/common/ImageWithFallback';
 import { getWhatsAppUrl } from '../utils/whatsapp';
@@ -12,6 +12,8 @@ interface SolutionsPageProps {
 }
 
 export const SolutionsPage: React.FC<SolutionsPageProps> = ({ onOpenQuoteModal }) => {
+  const SOLUTIONS = useSolutions();
+  const { get } = useContent();
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'Home':
@@ -40,10 +42,10 @@ export const SolutionsPage: React.FC<SolutionsPageProps> = ({ onOpenQuoteModal }
     <div className="bg-[#F8F8F5] min-h-screen">
       {/* En-tête de page concis */}
       <PageHeader
-        title="Solutions solaires par profil"
-        description="Packs dimensionnés pour particuliers, commerces, exploitants agricoles et professionnels au Sénégal."
-        kicker="SOLUTIONS CLÉS EN MAIN"
-        imageSrc={ASSETS.banners.solutions}
+        title={get('solutions.header.title')}
+        description={get('solutions.header.description')}
+        kicker={get('solutions.header.kicker')}
+        imageSrc={get('solutions.header.image')}
         breadcrumbs={[
           { label: 'Accueil', to: '/' },
           { label: 'Solutions' },
@@ -54,7 +56,7 @@ export const SolutionsPage: React.FC<SolutionsPageProps> = ({ onOpenQuoteModal }
         {/* Barre d'accès rapide par profil (UX directe) */}
         <div className="bg-white p-3 sm:p-4 rounded-xl border border-neutral-200 flex items-center gap-2 overflow-x-auto scrollbar-none">
           <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider px-2 shrink-0 hidden sm:inline">
-            Profils :
+            {get('solutions.label.profiles')}
           </span>
           {SOLUTIONS.map((s) => (
             <button
@@ -124,7 +126,7 @@ export const SolutionsPage: React.FC<SolutionsPageProps> = ({ onOpenQuoteModal }
 
                   {/* Matériel recommandé concis */}
                   <div className="pt-2 text-xs text-neutral-500 border-t border-neutral-100">
-                    <span className="font-semibold text-neutral-800">Équipements inclus : </span>
+                    <span className="font-semibold text-neutral-800">{get('solutions.label.gear')} </span>
                     {solution.recommendedGear.slice(0, 3).join(' · ')}
                   </div>
 
@@ -135,7 +137,7 @@ export const SolutionsPage: React.FC<SolutionsPageProps> = ({ onOpenQuoteModal }
                       onClick={() => onOpenQuoteModal(solution.title)}
                       className="px-5 py-2.5 bg-[#123D32] hover:bg-[#1E6746] text-white rounded-lg text-xs font-bold transition-colors cursor-pointer"
                     >
-                      Demander un devis
+                      {get('solutions.label.quote')}
                     </button>
 
                     <a
